@@ -22,7 +22,7 @@ version: '1.0'
 #
 files:
 #   './test/**/*.c': --c99
-
+    './src/**': -Wextra
 #
 # for source files with virtual paths
 #
