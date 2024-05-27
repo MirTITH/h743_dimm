@@ -5,7 +5,8 @@
   "srcDirs": [
     ".eide/deps",
     "CubeMX",
-    "src"
+    "src",
+    "test"
   ],
   "virtualFolder": {
     "name": "<virtual_root>",
@@ -33,12 +34,17 @@
         },
         "options": "null"
       },
-      "uploader": "OpenOCD",
+      "uploader": "STLink",
       "uploadConfig": {
         "bin": "",
-        "target": "stm32h7x",
-        "interface": "stlink",
-        "baseAddr": "0x08000000"
+        "proType": "SWD",
+        "resetMode": "default",
+        "runAfterProgram": true,
+        "speed": 4000,
+        "address": "0x08000000",
+        "elFile": "None",
+        "optionBytes": ".eide/debug.st.option.bytes.ini",
+        "otherCmds": ""
       },
       "uploadConfigMap": {
         "JLink": {
@@ -62,6 +68,12 @@
           "elFile": "None",
           "optionBytes": ".eide/debug.st.option.bytes.ini",
           "otherCmds": ""
+        },
+        "OpenOCD": {
+          "bin": "",
+          "target": "stm32h7x",
+          "interface": "stlink",
+          "baseAddr": "0x08000000"
         }
       },
       "custom_dep": {
@@ -83,8 +95,7 @@
         "defineList": [
           "USE_HAL_DRIVER",
           "STM32H743xx",
-          "STM32_THREAD_SAFE_STRATEGY=4",
-          "DEBUG"
+          "STM32_THREAD_SAFE_STRATEGY=4"
         ]
       }
     }

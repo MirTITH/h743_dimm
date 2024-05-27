@@ -1,10 +1,10 @@
 #include "devices.hpp"
-#include <stpp/driver/driver_uart.hpp>
+#include <stpp/driver/uart_driver.hpp>
 #include <usart.h>
 
 namespace devices
 {
-    std::unique_ptr<stpp::device::IoDevice> Uart1;
+    std::unique_ptr<stpp::device::ByteDevice> Uart1;
 
     template <typename dev_type, typename driver_ptr>
     static void MakeDevice(dev_type &device, driver_ptr &&driver)
@@ -15,7 +15,7 @@ namespace devices
     void InitDevices()
     {
         using namespace stpp::driver;
-
-        MakeDevice(Uart1, std::make_unique<DriverUart>(huart1));
+        
+        MakeDevice(Uart1, std::make_unique<UartDriver>(&huart1));
     }
 }

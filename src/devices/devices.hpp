@@ -1,10 +1,10 @@
 #pragma once
 
-#include <stpp/device/io_device.hpp>
+#include <stpp/device/byte_device.hpp>
 #include <memory>
 
 namespace devices
 {
     void InitDevices();
-    extern std::unique_ptr<stpp::device::IoDevice> Uart1;
+    extern std::unique_ptr<stpp::device::ByteDevice> Uart1;
 }

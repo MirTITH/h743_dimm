@@ -4,13 +4,12 @@
     "afterBuildTasks": [],
     "global": {
         "$float-abi-type": "hard",
-        "output-debug-info": "enable",
-        "misc-control": "--specs=nosys.specs --specs=nano.specs -u _printf_float -u _scanf_float"
+        "output-debug-info": "enable"
     },
     "c/cpp-compiler": {
         "language-c": "c11",
         "language-cpp": "c++17",
-        "optimization": "level-0",
+        "optimization": "level-3",
         "warnings": "all-warnings",
         "one-elf-section-per-function": true,
         "one-elf-section-per-data": true,
