@@ -3,7 +3,6 @@
   "type": "ARM",
   "dependenceList": [],
   "srcDirs": [
-    ".eide/deps",
     "CubeMX",
     "src",
     "test"
@@ -79,7 +78,6 @@
       "custom_dep": {
         "name": "default",
         "incList": [
-          ".eide/deps",
           "CubeMX/Core/Inc",
           "CubeMX/Drivers/STM32H7xx_HAL_Driver/Inc",
           "CubeMX/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
@@ -91,7 +89,6 @@
           "src"
         ],
         "libList": [],
-        "sourceDirList": [],
         "defineList": [
           "USE_HAL_DRIVER",
           "STM32H743xx",
@@ -100,5 +97,5 @@
       }
     }
   },
-  "version": "3.3"
+  "version": "3.4"
 }
