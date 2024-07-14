@@ -71,6 +71,7 @@
 #define configQUEUE_REGISTRY_SIZE                8
 #define configUSE_RECURSIVE_MUTEXES              1
 #define configUSE_COUNTING_SEMAPHORES            1
+#define configENABLE_BACKWARD_COMPATIBILITY      0
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION  1
 #define configUSE_POSIX_ERRNO                    1
 /* USER CODE BEGIN MESSAGE_BUFFER_LENGTH_TYPE */
@@ -96,6 +97,7 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil              1
 #define INCLUDE_vTaskDelay                   1
 #define INCLUDE_xTaskGetSchedulerState       1
+#define INCLUDE_xTaskGetCurrentTaskHandle    1
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS

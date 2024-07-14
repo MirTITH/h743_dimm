@@ -8,24 +8,26 @@
 #include <stpp/thread_priority_def.h>
 #include <tim.h>
 #include <HighPrecisionTime/high_precision_time.h>
+#include <vector>
+#include <stpp/freertos_allocator.hpp>
 
-void ByteDeviceDaemon(void *argument)
-{
-    auto uart = (stpp::device::ByteDevice *)argument;
-    uart->Spin();
-}
+// void ByteDeviceDaemon(void *argument)
+// {
+//     auto uart = (stpp::device::ByteDevice *)argument;
+//     uart->Spin();
+// }
 
-void WriteTask(void *argument)
-{
-    auto prefix_str = (const char *)argument;
-    int count       = 0;
-    while (true) {
-        char str[32];
-        auto length = std::snprintf(str, sizeof(str), "%s: %d\n", prefix_str, count++);
-        devices::Uart1->Write(str, length);
-        vTaskDelay(10);
-    }
-}
+// void WriteTask(void *argument)
+// {
+//     auto prefix_str = (const char *)argument;
+//     int count       = 0;
+//     while (true) {
+//         char str[32];
+//         auto length = std::snprintf(str, sizeof(str), "%s: %d\n", prefix_str, count++);
+//         devices::Uart1->Write(str, length);
+//         vTaskDelay(10);
+//     }
+// }
 
 void StartDefaultTask(void const *argument)
 {
@@ -34,17 +36,20 @@ void StartDefaultTask(void const *argument)
     extern void test_main();
     test_main();
 
-    HPT_Init();
+    std::vector<int, FreeRTOSAllocator<int>> vec;
 
-    devices::InitDevices();
-    xTaskCreate(ByteDeviceDaemon, "Uart1Daemon", 256, devices::Uart1.get(), PriorityNormal, nullptr);
-    vTaskDelay(1000);
+    for (int i = 0; i < 10; i++) {
+        vec.push_back(i);
+    }
 
-    HAL_TIM_Base_Start_IT(&htim6);
 
-    xTaskCreate(WriteTask, "WriteTask1", 256, (void *)"WriteTask1", PriorityNormal, nullptr);
-    xTaskCreate(WriteTask, "WriteTask2", 256, (void *)"Hello WriteTask2", PriorityNormal, nullptr);
-    xTaskCreate(WriteTask, "WriteTask3", 256, (void *)"你好！😀WriteTask3", PriorityNormal, nullptr);
+    // HPT_Init();
+
+    // devices::InitDevices();
+    // xTaskCreate(ByteDeviceDaemon, "Uart1Daemon", 256, devices::Uart1.get(), PriorityNormal, nullptr);
+    // vTaskDelay(1000);
+
+    // HAL_TIM_Base_Start_IT(&htim6);
 
     while (true) {
         HAL_GPIO_TogglePin(Led_GPIO_Port, Led_Pin);

@@ -3,7 +3,6 @@
   "type": "ARM",
   "dependenceList": [],
   "srcDirs": [
-    ".eide/deps",
     "CubeMX",
     "src",
     "test"
@@ -34,13 +33,17 @@
         },
         "options": "null"
       },
-      "uploader": "pyOCD",
+      "uploader": "STLink",
       "uploadConfig": {
         "bin": "",
-        "targetName": "stm32h743xx",
-        "baseAddr": "0x08000000",
-        "speed": "4M",
-        "config": ".eide/debug.pyocd.yaml"
+        "proType": "SWD",
+        "resetMode": "default",
+        "runAfterProgram": true,
+        "speed": 4000,
+        "address": "0x08000000",
+        "elFile": "None",
+        "optionBytes": ".eide/debug.st.option.bytes.ini",
+        "otherCmds": ""
       },
       "uploadConfigMap": {
         "JLink": {
@@ -70,12 +73,19 @@
           "target": "stm32h7x",
           "interface": "stlink",
           "baseAddr": "0x08000000"
+        },
+        "pyOCD": {
+          "bin": "",
+          "targetName": "stm32h743xx",
+          "baseAddr": "0x08000000",
+          "speed": "4M",
+          "config": ".eide/debug.pyocd.yaml",
+          "otherCmds": ""
         }
       },
       "custom_dep": {
         "name": "default",
         "incList": [
-          ".eide/deps",
           "CubeMX/Core/Inc",
           "CubeMX/Drivers/STM32H7xx_HAL_Driver/Inc",
           "CubeMX/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
@@ -87,7 +97,6 @@
           "src"
         ],
         "libList": [],
-        "sourceDirList": [],
         "defineList": [
           "USE_HAL_DRIVER",
           "STM32H743xx",
@@ -96,5 +105,5 @@
       }
     }
   },
-  "version": "3.3"
+  "version": "3.4"
 }

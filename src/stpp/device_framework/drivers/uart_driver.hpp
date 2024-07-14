@@ -22,7 +22,7 @@ namespace stpp
 
             UartDriver(UartDriver &&) = default;
 
-            virtual std::size_t AsyncRead(uint8_t *buffer, std::size_t length) override
+            virtual bool AsyncRead(uint8_t *buffer, std::size_t length) override
             {
                 if (IsAddressValidForDma(buffer)) {
                     return ReadDma(buffer, length);
@@ -31,7 +31,7 @@ namespace stpp
                 }
             }
 
-            virtual std::size_t AsyncWrite(const uint8_t *buffer, std::size_t length) override
+            virtual bool AsyncWrite(const uint8_t *buffer, std::size_t length) override
             {
                 if (IsAddressValidForDma(buffer)) {
                     return WriteDma(buffer, length);
@@ -74,6 +74,20 @@ namespace stpp
 
                 auto result = HAL_UART_Transmit_DMA(huart_, static_cast<const uint8_t *>(buffer), length);
                 return result == HAL_OK;
+            }
+
+            void _RxCpltCallback()
+            {
+                if (read_cplt_cb_) {
+                    read_cplt_cb_(ErrorCode::OK);
+                }
+            }
+
+            void _TxCpltCallback()
+            {
+                if (write_cplt_cb_) {
+                    write_cplt_cb_(ErrorCode::OK);
+                }
             }
 
         protected:

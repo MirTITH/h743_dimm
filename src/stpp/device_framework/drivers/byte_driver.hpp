@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <functional>
-#include <limits>
+#include "../../error_code.hpp"
 
 namespace stpp
 {
@@ -9,15 +9,15 @@ namespace stpp
     {
         class ByteDriver
         {
-            using CallbackFunc_t = std::function<void(int)>;
+            using CallbackFunc_t = std::function<void(stpp::ErrorCode)>;
 
         public:
             ByteDriver()                   = default;
             ByteDriver(const ByteDriver &) = delete;
             ByteDriver(ByteDriver &&)      = default;
 
-            virtual std::size_t AsyncRead(uint8_t *buffer, std::size_t length)        = 0;
-            virtual std::size_t AsyncWrite(const uint8_t *buffer, std::size_t length) = 0;
+            virtual bool AsyncRead(uint8_t *buffer, std::size_t length)        = 0;
+            virtual bool AsyncWrite(const uint8_t *buffer, std::size_t length) = 0;
 
             void SetReadCpltCb(CallbackFunc_t cb)
             {

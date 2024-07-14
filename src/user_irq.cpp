@@ -15,7 +15,7 @@ void MY_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART1) {
-        devices::Uart1->WriteCpltCallback();
+        // devices::Uart1->WriteCpltCallback();
     }
 }
 
@@ -27,7 +27,7 @@ void MY_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         char str[64];
         auto length   = std::snprintf(str, sizeof(str), "TIM6 PeriodElapsedCallback %d, %lu us\n", count++, duration);
         auto start_us = HPT_GetUs();
-        devices::Uart1->Write(str, length);
+        // devices::Uart1->Write(str, length);
         duration = HPT_GetUs() - start_us;
     }
 }
