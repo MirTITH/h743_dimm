@@ -1,9 +1,10 @@
 #pragma once
 
 #include "byte_driver.hpp"
+#include <memory>
 #include <usart.h>
-
 #include <cassert>
+#include "../../fnptr.hpp"
 
 namespace stpp
 {
@@ -17,7 +18,7 @@ namespace stpp
             UartDriver(UART_HandleTypeDef *huart)
                 : huart_(huart)
             {
-                assert(huart_ != nullptr);
+                assert(huart != nullptr);
             }
 
             UartDriver(UartDriver &&) = default;
@@ -76,14 +77,14 @@ namespace stpp
                 return result == HAL_OK;
             }
 
-            void _RxCpltCallback()
+            virtual void HardwareRxCpltCallback() override
             {
                 if (read_cplt_cb_) {
                     read_cplt_cb_(ErrorCode::OK);
                 }
             }
 
-            void _TxCpltCallback()
+            virtual void HardwareTxCpltCallback() override
             {
                 if (write_cplt_cb_) {
                     write_cplt_cb_(ErrorCode::OK);

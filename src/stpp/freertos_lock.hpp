@@ -201,4 +201,73 @@ namespace stpp
     };
 #endif // configUSE_RECURSIVE_MUTEXES
 
+    class CriticalSection
+    {
+    public:
+        void lock_from_thread()
+        {
+            taskENTER_CRITICAL();
+        }
+
+        void unlock_from_thread()
+        {
+            taskEXIT_CRITICAL();
+        }
+
+        void lock_from_isr()
+        {
+            interrupt_status_ = taskENTER_CRITICAL_FROM_ISR();
+        }
+
+        void unlock_from_isr()
+        {
+            taskEXIT_CRITICAL_FROM_ISR(interrupt_status_);
+        }
+
+        void lock()
+        {
+            if (InHandlerMode()) {
+                lock_from_isr();
+            } else {
+                lock_from_thread();
+            }
+        }
+
+        void unlock()
+        {
+            if (InHandlerMode()) {
+                unlock_from_isr();
+            } else {
+                unlock_from_thread();
+            }
+        }
+
+    private:
+        uint32_t interrupt_status_;
+    };
+
+    class CriticalSectionFromThread
+    {
+    public:
+        void lock_from_thread()
+        {
+            taskENTER_CRITICAL();
+        }
+
+        void unlock_from_thread()
+        {
+            taskEXIT_CRITICAL();
+        }
+
+        void lock()
+        {
+            lock_from_thread();
+        }
+
+        void unlock()
+        {
+            unlock_from_thread();
+        }
+    };
+
 } // namespace freertos_lock

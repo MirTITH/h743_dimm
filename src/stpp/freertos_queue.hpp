@@ -6,6 +6,7 @@
 #include <queue.h>
 #include <stdexcept>
 #include "in_handle_mode.h"
+#include "freertos_delay_ms.h"
 
 namespace stpp
 {
@@ -46,11 +47,7 @@ namespace stpp
             alignas(T) unsigned char buf[sizeof(T)];
             new (buf) T(item);
 
-            if (ms_to_wait == std::numeric_limits<size_t>::max()) {
-                return xQueueSendToBack(queue_handle_, buf, portMAX_DELAY) == pdTRUE;
-            } else {
-                return xQueueSendToBack(queue_handle_, buf, pdMS_TO_TICKS(ms_to_wait)) == pdTRUE;
-            }
+            return xQueueSendToBack(queue_handle_, buf, FreeRtosMsToTick(ms_to_wait)) == pdTRUE;
         }
 
         bool SendToBack(const T &item, size_t ms_to_wait = std::numeric_limits<size_t>::max())
@@ -77,11 +74,7 @@ namespace stpp
         {
             alignas(T) unsigned char buf[sizeof(T)];
             new (buf) T(item);
-            if (ms_to_wait == std::numeric_limits<size_t>::max()) {
-                return xQueueSendToFront(queue_handle_, buf, portMAX_DELAY) == pdTRUE;
-            } else {
-                return xQueueSendToFront(queue_handle_, buf, pdMS_TO_TICKS(ms_to_wait)) == pdTRUE;
-            }
+            return xQueueSendToFront(queue_handle_, buf, FreeRtosMsToTick(ms_to_wait)) == pdTRUE;
         }
 
         bool SendToFront(const T &item, size_t ms_to_wait = std::numeric_limits<size_t>::max())
@@ -97,11 +90,7 @@ namespace stpp
         {
             BaseType_t result;
             alignas(T) unsigned char buf[sizeof(T)];
-            if (ms_to_wait == std::numeric_limits<size_t>::max()) {
-                result = xQueueReceive(queue_handle_, buf, portMAX_DELAY);
-            } else {
-                result = xQueueReceive(queue_handle_, buf, pdMS_TO_TICKS(ms_to_wait));
-            }
+            result = xQueueReceive(queue_handle_, buf, FreeRtosMsToTick(ms_to_wait));
 
             if (result != pdTRUE) {
                 throw std::runtime_error("Failed to receive from queue");
