@@ -73,6 +73,14 @@
           "target": "stm32h7x",
           "interface": "stlink",
           "baseAddr": "0x08000000"
+        },
+        "pyOCD": {
+          "bin": "",
+          "targetName": "stm32h743xx",
+          "baseAddr": "0x08000000",
+          "speed": "4M",
+          "config": ".eide/debug.pyocd.yaml",
+          "otherCmds": ""
         }
       },
       "custom_dep": {

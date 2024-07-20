@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stpp/device/byte_device.hpp>
+#include <stpp/device_framework/byte_device.hpp>
 #include <memory>
 
 namespace devices

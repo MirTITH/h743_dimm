@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceRoot}",
+            "type": "cortex-debug",
+            "request": "attach",
+            "name": "stlink",
+            "servertype": "openocd",
+            "executable": "build/Debug/eide_template.elf",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32h7x.cfg"
+            ],
+            "toolchainPrefix": "arm-none-eabi"
+        },
+        {
+            "cwd": "${workspaceRoot}",
+            "type": "cortex-debug",
+            "request": "attach",
+            "name": "pyocd",
+            "servertype": "pyocd",
+            "executable": "build/Debug/eide_template.elf",
+            "runToEntryPoint": "main",
+            "targetId": "stm32h743xx",
+            "toolchainPrefix": "arm-none-eabi"
+        }
+    ]
+}
