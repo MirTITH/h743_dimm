@@ -1,10 +1,8 @@
 #pragma once
 
 #include "byte_driver.hpp"
-#include <memory>
 #include <usart.h>
 #include <cassert>
-#include "../../fnptr.hpp"
 
 namespace stpp
 {
